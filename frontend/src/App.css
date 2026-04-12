@@ -1,4 +1,4 @@
-/* Immersive 3D Portfolio Styles */
+/* Cinematic 3D Portfolio Experience */
 
 * {
     margin: 0;
@@ -11,30 +11,46 @@ html, body {
     overflow-x: hidden;
     background-color: #0B0B1A;
     color: white;
+    cursor: none; /* Custom cursor for premium feel */
 }
 
-/* Smooth scrolling */
+/* Smooth scrolling with easing */
 html {
     scroll-behavior: smooth;
 }
 
-/* Allow vertical scroll */
 body {
     overflow-y: auto;
 }
 
-/* Custom scrollbar */
+/* Custom cursor */
+body::before {
+    content: '';
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #6C4DF6;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    opacity: 0.6;
+}
+
+/* Enhanced scrollbar */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
 }
 
 ::-webkit-scrollbar-track {
     background: #0B0B1A;
+    border-left: 1px solid #1a1a2e;
 }
 
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, #6C4DF6, #9D7BFF);
-    border-radius: 5px;
+    border-radius: 10px;
+    transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -46,13 +62,37 @@ canvas {
     user-select: none;
     -webkit-user-select: none;
     outline: none;
+    touch-action: none;
 }
 
-/* Animations */
-@keyframes fadeIn {
+/* Smooth transitions for all interactive elements */
+button, a, input, textarea {
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Glass morphism enhancement */
+.glass {
+    background: rgba(26, 26, 46, 0.4);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(108, 77, 246, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(108, 77, 246, 0.1);
+}
+
+/* Glow effect on hover */
+.glow-on-hover:hover {
+    box-shadow: 0 0 20px rgba(108, 77, 246, 0.5),
+                0 0 40px rgba(157, 123, 255, 0.3),
+                0 0 60px rgba(198, 182, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Cinematic fade-in animation */
+@keyframes cinematicFadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
     }
     to {
         opacity: 1;
@@ -60,19 +100,36 @@ canvas {
     }
 }
 
+.cinematic-enter {
+    animation: cinematicFadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Pulse animation for CTAs */
 @keyframes pulse {
     0%, 100% {
-        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(108, 77, 246, 0.7);
     }
     50% {
-        opacity: 0.5;
+        box-shadow: 0 0 0 15px rgba(108, 77, 246, 0);
     }
 }
 
-.animate-fadeIn {
-    animation: fadeIn 0.8s ease-out forwards;
+.pulse-animation {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-.animate-pulse {
-    animation: pulse 2s ease-in-out infinite;
+/* Depth layering */
+.depth-layer-front {
+    position: relative;
+    z-index: 3;
+}
+
+.depth-layer-mid {
+    position: relative;
+    z-index: 2;
+}
+
+.depth-layer-back {
+    position: relative;
+    z-index: 1;
 }
