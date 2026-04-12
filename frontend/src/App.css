@@ -6,14 +6,21 @@
     box-sizing: border-box;
 }
 
-body {
+html, body {
+    width: 100%;
     overflow-x: hidden;
     background-color: #0B0B1A;
+    color: white;
 }
 
 /* Smooth scrolling */
 html {
     scroll-behavior: smooth;
+}
+
+/* Allow vertical scroll */
+body {
+    overflow-y: auto;
 }
 
 /* Custom scrollbar */
