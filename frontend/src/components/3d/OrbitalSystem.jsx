@@ -301,37 +301,52 @@ const OrbitalSystem = () => {
         centerSun.userData.glow.scale.set(scale, scale, scale);
       }
 
-      // ANIMATE ALL PLANETS - CONTINUOUS ORBITAL MOTION
+      // ANIMATE ALL PLANETS - SMOOTH CONTINUOUS ORBITAL MOTION
       planetsRef.current.forEach(planetGroup => {
-        // Update angle for orbital rotation
-        planetGroup.userData.angle += planetGroup.userData.speed;
-
-        // Calculate new position using trigonometry
-        const x = Math.cos(planetGroup.userData.angle) * planetGroup.userData.orbitRadius;
-        const z = Math.sin(planetGroup.userData.angle) * planetGroup.userData.orbitRadius;
+        const userData = planetGroup.userData;
         
-        // Apply position
+        // Increment angle for continuous orbital rotation
+        userData.angle += userData.speed;
+
+        // Calculate orbital position using trigonometry (circular motion)
+        const x = Math.cos(userData.angle) * userData.orbitRadius;
+        const z = Math.sin(userData.angle) * userData.orbitRadius;
+        
+        // Apply smooth orbital position
         planetGroup.position.x = x;
         planetGroup.position.z = z;
         
-        // Add subtle floating motion on Y axis
-        planetGroup.position.y = Math.sin(elapsedTime * 2 + planetGroup.userData.angle) * 0.3;
+        // Subtle vertical floating motion (adds life)
+        planetGroup.position.y = Math.sin(elapsedTime * 1.5 + userData.angle) * 0.2;
 
-        // 3D DEPTH EFFECT - Scale based on Z position
-        // Planets closer to camera (positive Z) appear larger
-        const depthFactor = (z / planetGroup.userData.orbitRadius) * 0.15 + 1;
-        const finalScale = planetGroup.userData.baseSize * depthFactor;
-        planetGroup.scale.setScalar(finalScale);
+        // === 3D DEPTH SIMULATION ===
+        
+        // 1. SCALE VARIATION - Planets closer to camera appear larger
+        const normalizedZ = z / userData.orbitRadius; // Range: -1 to 1
+        const depthScale = 1 + normalizedZ * 0.25; // Closer = bigger
+        planetGroup.scale.setScalar(depthScale);
 
-        // Opacity based on depth (subtle)
-        if (planetGroup.userData.planet && planetGroup.userData.planet.material) {
-          const opacityFactor = (z / planetGroup.userData.orbitRadius) * 0.2 + 0.9;
-          planetGroup.userData.planet.material.opacity = Math.max(0.7, opacityFactor);
-          planetGroup.userData.planet.material.transparent = true;
+        // 2. OPACITY FADE - Far planets (negative Z) slightly dimmer
+        if (userData.planet && userData.planet.material) {
+          const opacity = 0.85 + normalizedZ * 0.15; // Range: 0.7 to 1
+          userData.planet.material.opacity = Math.max(0.7, opacity);
+          userData.planet.material.transparent = true;
         }
 
-        // Rotate planet on its axis
-        planetGroup.userData.planet.rotation.y += 0.01;
+        // 3. BLUR SIMULATION - Adjust emissive intensity based on depth
+        if (userData.planet && userData.planet.material) {
+          const emissiveIntensity = 0.3 + normalizedZ * 0.15;
+          userData.planet.material.emissiveIntensity = emissiveIntensity;
+        }
+
+        // 4. GLOW INTENSITY - Far planets have softer glow
+        if (userData.glow && userData.glow.material) {
+          const glowOpacity = 0.1 + normalizedZ * 0.08;
+          userData.glow.material.opacity = Math.max(0.05, glowOpacity);
+        }
+
+        // Planet self-rotation (spin on own axis)
+        userData.planet.rotation.y += 0.008;
       });
 
       // Star field slow rotation
@@ -339,13 +354,14 @@ const OrbitalSystem = () => {
         starField.rotation.y += 0.0002;
       }
 
-      // SUBTLE PARALLAX - Camera responds to mouse
+      // SUBTLE PARALLAX - Camera responds to mouse (very gentle)
       if (!isMobile) {
-        const targetX = mouseRef.current.x * 0.5;
-        const targetY = mouseRef.current.y * 0.3;
+        const targetX = mouseRef.current.x * 0.8;  // Horizontal shift
+        const targetY = mouseRef.current.y * 0.5;  // Vertical shift
         
-        camera.position.x += (targetX - camera.position.x) * 0.05;
-        camera.position.y += (targetY + 8 - camera.position.y) * 0.05;
+        // Smooth lerp to target position (creates lag effect)
+        camera.position.x += (targetX - camera.position.x) * 0.03;
+        camera.position.y += (targetY + 8 - camera.position.y) * 0.03;
       }
 
       // Camera always looks at center
