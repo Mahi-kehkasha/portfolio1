@@ -194,7 +194,7 @@ const OrbitalHome = () => {
                     {project.category}
                   </div>
                   
-                  <div className="space-y-4 text-left">
+                  <div className="space-y-4 text-left mb-6">
                     <div>
                       <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Challenge</div>
                       <div className="text-sm text-gray-400 leading-relaxed">{project.problem}</div>
@@ -206,27 +206,6 @@ const OrbitalHome = () => {
                     <div>
                       <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Outcome</div>
                       <div className="text-sm font-medium" style={{ color: project.color }}>{project.result}</div>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-purple-500/20">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold" style={{ color: project.color, fontFamily: 'Outfit, sans-serif' }}>
-                        {project.metrics.traffic}
-                      </div>
-                      <div className="text-xs text-gray-500 uppercase tracking-wide">Traffic</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold" style={{ color: project.color, fontFamily: 'Outfit, sans-serif' }}>
-                        {project.metrics.leads}
-                      </div>
-                      <div className="text-xs text-gray-500 uppercase tracking-wide">Leads</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold" style={{ color: project.color, fontFamily: 'Outfit, sans-serif' }}>
-                        {project.metrics.conversion}
-                      </div>
-                      <div className="text-xs text-gray-500 uppercase tracking-wide">Conversion</div>
                     </div>
                   </div>
                 </div>

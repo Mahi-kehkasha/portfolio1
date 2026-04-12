@@ -72,8 +72,7 @@ export const projects = [
     category: "Construction",
     problem: "Low online visibility, no digital presence",
     strategy: "SEO-optimized website + local targeting",
-    result: "65% traffic increase, 40+ leads in 3 months",
-    metrics: { traffic: "+65%", leads: "40+", conversion: "85%" },
+    result: "Successfully established strong online presence with improved search rankings",
     color: "#6C4DF6"
   },
   {
@@ -83,8 +82,7 @@ export const projects = [
     category: "Architecture",
     problem: "Needed modern portfolio showcase",
     strategy: "Image-rich portfolio site with fast loading",
-    result: "50% better engagement, professional image",
-    metrics: { traffic: "+50%", leads: "30+", conversion: "90%" },
+    result: "Enhanced professional image with better client engagement",
     color: "#9D7BFF"
   },
   {
@@ -94,8 +92,7 @@ export const projects = [
     category: "Education",
     problem: "Manual inquiry handling",
     strategy: "Online admission system + local SEO",
-    result: "75% reduction in manual work, 55+ online inquiries",
-    metrics: { traffic: "+80%", leads: "55+", conversion: "88%" },
+    result: "Streamlined operations with automated inquiry management",
     color: "#C6B6FF"
   },
   {
@@ -105,8 +102,7 @@ export const projects = [
     category: "E-commerce",
     problem: "Needed online store for premium products",
     strategy: "WooCommerce + payment integration + SEO",
-    result: "120+ orders in 2 months, 45% conversion rate",
-    metrics: { traffic: "+95%", leads: "120+", conversion: "92%" },
+    result: "Launched successful e-commerce platform with seamless checkout",
     color: "#6C4DF6"
   }
 ];
