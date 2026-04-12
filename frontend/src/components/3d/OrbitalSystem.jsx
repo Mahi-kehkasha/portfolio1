@@ -21,7 +21,12 @@ const OrbitalSystem = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
-    if (!containerRef.current) return;
+    if (!containerRef.current) {
+      console.warn('[Orbital System] Container ref not ready');
+      return;
+    }
+
+    console.log('[Orbital System] Initializing 3D scene...');
 
     // Scene setup
     const scene = new THREE.Scene();
@@ -42,7 +47,8 @@ const OrbitalSystem = () => {
     // Renderer
     const renderer = new THREE.WebGLRenderer({ 
       antialias: true, 
-      alpha: false
+      alpha: false,
+      powerPreference: 'high-performance'
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -280,86 +286,106 @@ const OrbitalSystem = () => {
 
     setupCameraAnimation();
 
-    // MAIN ANIMATION LOOP
-    let animationId;
+    // MAIN ANIMATION LOOP - GUARANTEED TO RUN
+    let animationId = null;
+    let frameCount = 0;
     const clock = new THREE.Clock();
 
     const animate = () => {
+      // CRITICAL: Request next frame FIRST to ensure continuous loop
       animationId = requestAnimationFrame(animate);
+      
+      frameCount++;
+      
+      // Debug log every 60 frames (1 second at 60fps)
+      if (frameCount % 60 === 0) {
+        console.log(`[Orbital System] Animation running - Frame ${frameCount}`);
+        if (planetsRef.current.length > 0) {
+          const firstPlanet = planetsRef.current[0];
+          console.log(`[Orbital System] First planet angle: ${firstPlanet.userData.angle.toFixed(3)}, position: (${firstPlanet.position.x.toFixed(2)}, ${firstPlanet.position.z.toFixed(2)})`);
+        }
+      }
       
       const deltaTime = clock.getDelta();
       const elapsedTime = clock.getElapsedTime();
 
       // Animate center sun pulse
-      if (centerSun.userData.core) {
+      if (centerSun && centerSun.userData.core) {
         const scale = 1 + Math.sin(elapsedTime * 2) * 0.05;
         centerSun.userData.core.scale.set(scale, scale, scale);
       }
 
-      if (centerSun.userData.glow) {
+      if (centerSun && centerSun.userData.glow) {
         const scale = 1 + Math.sin(elapsedTime * 1.5) * 0.1;
         centerSun.userData.glow.scale.set(scale, scale, scale);
       }
 
-      // ANIMATE ALL PLANETS - SMOOTH CONTINUOUS ORBITAL MOTION
-      planetsRef.current.forEach(planetGroup => {
-        const userData = planetGroup.userData;
-        
-        // Increment angle for continuous orbital rotation
-        userData.angle += userData.speed;
+      // ANIMATE ALL PLANETS - CONTINUOUS ORBITAL MOTION
+      if (planetsRef.current && planetsRef.current.length > 0) {
+        planetsRef.current.forEach((planetGroup, index) => {
+          if (!planetGroup || !planetGroup.userData) return;
+          
+          const userData = planetGroup.userData;
+          
+          // Increment angle for continuous orbital rotation
+          userData.angle += userData.speed;
+          
+          // Keep angle in 0 to 2π range to prevent overflow
+          if (userData.angle > Math.PI * 2) {
+            userData.angle -= Math.PI * 2;
+          }
 
-        // Calculate orbital position using trigonometry (circular motion)
-        const x = Math.cos(userData.angle) * userData.orbitRadius;
-        const z = Math.sin(userData.angle) * userData.orbitRadius;
-        
-        // Apply smooth orbital position
-        planetGroup.position.x = x;
-        planetGroup.position.z = z;
-        
-        // Subtle vertical floating motion (adds life)
-        planetGroup.position.y = Math.sin(elapsedTime * 1.5 + userData.angle) * 0.2;
+          // Calculate new orbital position using trigonometry
+          const x = Math.cos(userData.angle) * userData.orbitRadius;
+          const z = Math.sin(userData.angle) * userData.orbitRadius;
+          const y = Math.sin(elapsedTime * 1.5 + userData.angle) * 0.2;
+          
+          // Apply position UPDATE (not set once)
+          planetGroup.position.set(x, y, z);
 
-        // === 3D DEPTH SIMULATION ===
-        
-        // 1. SCALE VARIATION - Planets closer to camera appear larger
-        const normalizedZ = z / userData.orbitRadius; // Range: -1 to 1
-        const depthScale = 1 + normalizedZ * 0.25; // Closer = bigger
-        planetGroup.scale.setScalar(depthScale);
+          // === 3D DEPTH EFFECTS ===
+          
+          // Scale variation based on Z position
+          const normalizedZ = z / userData.orbitRadius;
+          const depthScale = 1 + normalizedZ * 0.25;
+          planetGroup.scale.setScalar(depthScale);
 
-        // 2. OPACITY FADE - Far planets (negative Z) slightly dimmer
-        if (userData.planet && userData.planet.material) {
-          const opacity = 0.85 + normalizedZ * 0.15; // Range: 0.7 to 1
-          userData.planet.material.opacity = Math.max(0.7, opacity);
-          userData.planet.material.transparent = true;
-        }
+          // Opacity fade for depth
+          if (userData.planet && userData.planet.material) {
+            const opacity = 0.85 + normalizedZ * 0.15;
+            userData.planet.material.opacity = Math.max(0.7, opacity);
+            userData.planet.material.transparent = true;
+          }
 
-        // 3. BLUR SIMULATION - Adjust emissive intensity based on depth
-        if (userData.planet && userData.planet.material) {
-          const emissiveIntensity = 0.3 + normalizedZ * 0.15;
-          userData.planet.material.emissiveIntensity = emissiveIntensity;
-        }
+          // Emissive intensity based on depth
+          if (userData.planet && userData.planet.material) {
+            const emissiveIntensity = 0.3 + normalizedZ * 0.15;
+            userData.planet.material.emissiveIntensity = emissiveIntensity;
+          }
 
-        // 4. GLOW INTENSITY - Far planets have softer glow
-        if (userData.glow && userData.glow.material) {
-          const glowOpacity = 0.1 + normalizedZ * 0.08;
-          userData.glow.material.opacity = Math.max(0.05, glowOpacity);
-        }
+          // Glow opacity based on depth
+          if (userData.glow && userData.glow.material) {
+            const glowOpacity = 0.1 + normalizedZ * 0.08;
+            userData.glow.material.opacity = Math.max(0.05, glowOpacity);
+          }
 
-        // Planet self-rotation (spin on own axis)
-        userData.planet.rotation.y += 0.008;
-      });
+          // Planet self-rotation (spin on own axis)
+          if (userData.planet) {
+            userData.planet.rotation.y += 0.008;
+          }
+        });
+      }
 
-      // Star field slow rotation
+      // Star field rotation
       if (starField) {
         starField.rotation.y += 0.0002;
       }
 
-      // SUBTLE PARALLAX - Camera responds to mouse (very gentle)
+      // Parallax camera movement
       if (!isMobile) {
-        const targetX = mouseRef.current.x * 0.8;  // Horizontal shift
-        const targetY = mouseRef.current.y * 0.5;  // Vertical shift
+        const targetX = mouseRef.current.x * 0.8;
+        const targetY = mouseRef.current.y * 0.5;
         
-        // Smooth lerp to target position (creates lag effect)
         camera.position.x += (targetX - camera.position.x) * 0.03;
         camera.position.y += (targetY + 8 - camera.position.y) * 0.03;
       }
@@ -367,9 +393,12 @@ const OrbitalSystem = () => {
       // Camera always looks at center
       camera.lookAt(0, 0, 0);
 
+      // RENDER SCENE
       renderer.render(scene, camera);
     };
 
+    // START ANIMATION LOOP
+    console.log('[Orbital System] Starting animation loop with', planetsRef.current.length, 'planets');
     animate();
 
     // Handle resize
@@ -382,14 +411,26 @@ const OrbitalSystem = () => {
 
     // Cleanup
     return () => {
+      console.log('[Orbital System] Cleaning up - stopping animation');
+      if (animationId !== null) {
+        cancelAnimationFrame(animationId);
+      }
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('resize', checkMobile);
-      if (animationId) cancelAnimationFrame(animationId);
-      if (containerRef.current && renderer.domElement) {
-        containerRef.current.removeChild(renderer.domElement);
+      
+      if (containerRef.current && renderer && renderer.domElement) {
+        try {
+          containerRef.current.removeChild(renderer.domElement);
+        } catch (e) {
+          console.warn('[Orbital System] Cleanup warning:', e);
+        }
       }
-      renderer.dispose();
+      
+      if (renderer) {
+        renderer.dispose();
+      }
+      
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, [isMobile]);
