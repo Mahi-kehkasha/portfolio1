@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home3D from './pages/Home3D';
+import CartoonHome from './pages/CartoonHome';
 import { Toaster } from './components/ui/toaster';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home3D />} />
+          <Route path="/" element={<CartoonHome />} />
         </Routes>
         <Toaster />
       </BrowserRouter>
