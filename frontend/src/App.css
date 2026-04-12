@@ -1,34 +1,71 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Immersive 3D Portfolio Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+body {
+    overflow-x: hidden;
+    background-color: #0B0B1A;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
 }
 
-.App-link {
-    color: #61dafb;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
 }
 
-@keyframes App-logo-spin {
+::-webkit-scrollbar-track {
+    background: #0B0B1A;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6C4DF6, #9D7BFF);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #9D7BFF, #C6B6FF);
+}
+
+/* Prevent text selection on 3D canvas */
+canvas {
+    user-select: none;
+    -webkit-user-select: none;
+    outline: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
     from {
-        transform: rotate(0deg);
+        opacity: 0;
+        transform: translateY(20px);
     }
     to {
-        transform: rotate(360deg);
+        opacity: 1;
+        transform: translateY(0);
     }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-pulse {
+    animation: pulse 2s ease-in-out infinite;
 }

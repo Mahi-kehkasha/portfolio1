@@ -1,17 +1,15 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
+import Home3D from './pages/Home3D';
 import { Toaster } from './components/ui/toaster';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home3D />} />
         </Routes>
         <Toaster />
       </BrowserRouter>
