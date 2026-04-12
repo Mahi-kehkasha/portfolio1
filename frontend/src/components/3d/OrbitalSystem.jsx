@@ -10,7 +10,8 @@ const OrbitalSystem = () => {
   const sceneRef = useRef(null);
   const cameraRef = useRef(null);
   const rendererRef = useRef(null);
-  const objectsRef = useRef({});
+  const planetsRef = useRef([]);
+  const mouseRef = useRef({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -49,7 +50,7 @@ const OrbitalSystem = () => {
     containerRef.current.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
-    // LIGHTING - Soft and elegant
+    // LIGHTING
     const ambientLight = new THREE.AmbientLight(0x6C4DF6, 0.3);
     scene.add(ambientLight);
 
@@ -61,7 +62,7 @@ const OrbitalSystem = () => {
     fillLight.position.set(-10, 0, -10);
     scene.add(fillLight);
 
-    // STAR FIELD (particles)
+    // STAR FIELD
     const createStarField = () => {
       const starCount = isMobile ? 1000 : 3000;
       const geometry = new THREE.BufferGeometry();
@@ -88,13 +89,12 @@ const OrbitalSystem = () => {
 
     const starField = createStarField();
     scene.add(starField);
-    objectsRef.current.starField = starField;
 
-    // CENTER SUN (Maheen/MK Brand Identity)
+    // CENTER SUN
     const createCenterSun = () => {
       const sunGroup = new THREE.Group();
 
-      // Core sphere
+      // Core
       const coreGeometry = new THREE.SphereGeometry(1.5, 64, 64);
       const coreMaterial = new THREE.MeshPhysicalMaterial({
         color: 0x6C4DF6,
@@ -107,8 +107,9 @@ const OrbitalSystem = () => {
       });
       const core = new THREE.Mesh(coreGeometry, coreMaterial);
       sunGroup.add(core);
+      sunGroup.userData.core = core;
 
-      // Glow layer
+      // Glow
       const glowGeometry = new THREE.SphereGeometry(2, 32, 32);
       const glowMaterial = new THREE.MeshBasicMaterial({
         color: 0x6C4DF6,
@@ -119,16 +120,13 @@ const OrbitalSystem = () => {
       });
       const glow = new THREE.Mesh(glowGeometry, glowMaterial);
       sunGroup.add(glow);
-
-      objectsRef.current.sunCore = core;
-      objectsRef.current.sunGlow = glow;
+      sunGroup.userData.glow = glow;
 
       return sunGroup;
     };
 
     const centerSun = createCenterSun();
     scene.add(centerSun);
-    objectsRef.current.centerSun = centerSun;
 
     // ORBIT RINGS
     const createOrbitRing = (radius, color, opacity) => {
@@ -156,25 +154,17 @@ const OrbitalSystem = () => {
       return ring;
     };
 
-    // Inner ring (Skills) - Fast orbit
     const innerRing = createOrbitRing(5, 0x9D7BFF, 0.3);
     scene.add(innerRing);
-    objectsRef.current.innerRing = innerRing;
 
-    // Middle ring (Services) - Medium orbit
     const middleRing = createOrbitRing(10, 0x6C4DF6, 0.4);
     scene.add(middleRing);
-    objectsRef.current.middleRing = middleRing;
 
-    // Outer ring (Projects) - Slow orbit
     const outerRing = createOrbitRing(15, 0xC6B6FF, 0.3);
     scene.add(outerRing);
-    objectsRef.current.outerRing = outerRing;
 
-    // CREATE PLANETS/NODES
-    const createPlanet = (size, color, orbitRadius, index, total, type) => {
-      const angle = (index / total) * Math.PI * 2;
-      
+    // CREATE ORBITING PLANETS
+    const createPlanet = (size, color, orbitRadius, startAngle, speed, type) => {
       const planetGroup = new THREE.Group();
 
       // Planet sphere
@@ -202,92 +192,67 @@ const OrbitalSystem = () => {
       const glow = new THREE.Mesh(glowGeometry, glowMaterial);
       planetGroup.add(glow);
 
-      // Position on orbit
-      planetGroup.position.set(
-        Math.cos(angle) * orbitRadius,
-        0,
-        Math.sin(angle) * orbitRadius
-      );
-
+      // Store orbital data
       planetGroup.userData = {
         orbitRadius,
-        angle,
-        speed: type === 'skill' ? 0.3 : type === 'service' ? 0.15 : 0.08,
+        angle: startAngle,
+        speed, // radians per frame
+        baseSize: size,
+        planet,
+        glow,
         type
       };
+
+      // Initial position
+      planetGroup.position.set(
+        Math.cos(startAngle) * orbitRadius,
+        0,
+        Math.sin(startAngle) * orbitRadius
+      );
 
       return planetGroup;
     };
 
-    // Skills planets (Inner orbit - 8 skills)
+    // Skills planets (Inner orbit - fast)
     const skillsPlanets = [];
     const skillColors = [0x6C4DF6, 0x9D7BFF, 0xC6B6FF, 0x6C4DF6, 0x9D7BFF, 0xC6B6FF, 0x6C4DF6, 0x9D7BFF];
     for (let i = 0; i < 8; i++) {
-      const planet = createPlanet(0.3, skillColors[i], 5, i, 8, 'skill');
+      const startAngle = (i / 8) * Math.PI * 2;
+      const planet = createPlanet(0.3, skillColors[i], 5, startAngle, 0.02, 'skill');
       scene.add(planet);
       skillsPlanets.push(planet);
     }
-    objectsRef.current.skillsPlanets = skillsPlanets;
 
-    // Services planets (Middle orbit - 6 services)
+    // Services planets (Middle orbit - medium)
     const servicesPlanets = [];
     const serviceColors = [0x74b9ff, 0x55efc4, 0xff6b9d, 0xffeaa7, 0xa29bfe, 0xfd79a8];
     for (let i = 0; i < 6; i++) {
-      const planet = createPlanet(0.5, serviceColors[i], 10, i, 6, 'service');
+      const startAngle = (i / 6) * Math.PI * 2;
+      const planet = createPlanet(0.5, serviceColors[i], 10, startAngle, 0.01, 'service');
       scene.add(planet);
       servicesPlanets.push(planet);
     }
-    objectsRef.current.servicesPlanets = servicesPlanets;
 
-    // Projects planets (Outer orbit - 4 major projects)
+    // Projects planets (Outer orbit - slow)
     const projectsPlanets = [];
     const projectColors = [0x6C4DF6, 0x9D7BFF, 0xC6B6FF, 0x6C4DF6];
     for (let i = 0; i < 4; i++) {
-      const planet = createPlanet(0.6, projectColors[i], 15, i, 4, 'project');
+      const startAngle = (i / 4) * Math.PI * 2;
+      const planet = createPlanet(0.6, projectColors[i], 15, startAngle, 0.005, 'project');
       scene.add(planet);
       projectsPlanets.push(planet);
     }
-    objectsRef.current.projectsPlanets = projectsPlanets;
 
-    // CONTINUOUS ANIMATIONS
-    const animateOrbitalSystem = () => {
-      const time = Date.now() * 0.0001;
+    // Store all planets
+    planetsRef.current = [...skillsPlanets, ...servicesPlanets, ...projectsPlanets];
 
-      // Sun pulse
-      if (objectsRef.current.sunCore) {
-        const scale = 1 + Math.sin(time * 3) * 0.05;
-        objectsRef.current.sunCore.scale.set(scale, scale, scale);
-      }
-
-      if (objectsRef.current.sunGlow) {
-        const scale = 1 + Math.sin(time * 2) * 0.1;
-        objectsRef.current.sunGlow.scale.set(scale, scale, scale);
-      }
-
-      // Rotate planets on their orbits
-      const allPlanets = [
-        ...(objectsRef.current.skillsPlanets || []),
-        ...(objectsRef.current.servicesPlanets || []),
-        ...(objectsRef.current.projectsPlanets || [])
-      ];
-
-      allPlanets.forEach(planet => {
-        planet.userData.angle += planet.userData.speed * 0.01;
-        planet.position.x = Math.cos(planet.userData.angle) * planet.userData.orbitRadius;
-        planet.position.z = Math.sin(planet.userData.angle) * planet.userData.orbitRadius;
-        
-        // Slight float
-        planet.position.y = Math.sin(planet.userData.angle * 3) * 0.3;
-        
-        // Slow rotation
-        planet.rotation.y += 0.005;
-      });
-
-      // Star field slow rotation
-      if (objectsRef.current.starField) {
-        objectsRef.current.starField.rotation.y += 0.0001;
-      }
+    // Mouse tracking for parallax
+    const handleMouseMove = (e) => {
+      if (isMobile) return;
+      mouseRef.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseRef.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };
+    window.addEventListener('mousemove', handleMouseMove);
 
     // CAMERA ANIMATION ON SCROLL
     const setupCameraAnimation = () => {
@@ -300,7 +265,6 @@ const OrbitalSystem = () => {
         }
       });
 
-      // Camera moves through the system
       tl.to(camera.position, {
         z: 5,
         y: 3,
@@ -316,16 +280,80 @@ const OrbitalSystem = () => {
 
     setupCameraAnimation();
 
-    // Animation loop
+    // MAIN ANIMATION LOOP
     let animationId;
+    const clock = new THREE.Clock();
+
     const animate = () => {
       animationId = requestAnimationFrame(animate);
       
-      animateOrbitalSystem();
-      
+      const deltaTime = clock.getDelta();
+      const elapsedTime = clock.getElapsedTime();
+
+      // Animate center sun pulse
+      if (centerSun.userData.core) {
+        const scale = 1 + Math.sin(elapsedTime * 2) * 0.05;
+        centerSun.userData.core.scale.set(scale, scale, scale);
+      }
+
+      if (centerSun.userData.glow) {
+        const scale = 1 + Math.sin(elapsedTime * 1.5) * 0.1;
+        centerSun.userData.glow.scale.set(scale, scale, scale);
+      }
+
+      // ANIMATE ALL PLANETS - CONTINUOUS ORBITAL MOTION
+      planetsRef.current.forEach(planetGroup => {
+        // Update angle for orbital rotation
+        planetGroup.userData.angle += planetGroup.userData.speed;
+
+        // Calculate new position using trigonometry
+        const x = Math.cos(planetGroup.userData.angle) * planetGroup.userData.orbitRadius;
+        const z = Math.sin(planetGroup.userData.angle) * planetGroup.userData.orbitRadius;
+        
+        // Apply position
+        planetGroup.position.x = x;
+        planetGroup.position.z = z;
+        
+        // Add subtle floating motion on Y axis
+        planetGroup.position.y = Math.sin(elapsedTime * 2 + planetGroup.userData.angle) * 0.3;
+
+        // 3D DEPTH EFFECT - Scale based on Z position
+        // Planets closer to camera (positive Z) appear larger
+        const depthFactor = (z / planetGroup.userData.orbitRadius) * 0.15 + 1;
+        const finalScale = planetGroup.userData.baseSize * depthFactor;
+        planetGroup.scale.setScalar(finalScale);
+
+        // Opacity based on depth (subtle)
+        if (planetGroup.userData.planet && planetGroup.userData.planet.material) {
+          const opacityFactor = (z / planetGroup.userData.orbitRadius) * 0.2 + 0.9;
+          planetGroup.userData.planet.material.opacity = Math.max(0.7, opacityFactor);
+          planetGroup.userData.planet.material.transparent = true;
+        }
+
+        // Rotate planet on its axis
+        planetGroup.userData.planet.rotation.y += 0.01;
+      });
+
+      // Star field slow rotation
+      if (starField) {
+        starField.rotation.y += 0.0002;
+      }
+
+      // SUBTLE PARALLAX - Camera responds to mouse
+      if (!isMobile) {
+        const targetX = mouseRef.current.x * 0.5;
+        const targetY = mouseRef.current.y * 0.3;
+        
+        camera.position.x += (targetX - camera.position.x) * 0.05;
+        camera.position.y += (targetY + 8 - camera.position.y) * 0.05;
+      }
+
+      // Camera always looks at center
       camera.lookAt(0, 0, 0);
+
       renderer.render(scene, camera);
     };
+
     animate();
 
     // Handle resize
@@ -338,6 +366,7 @@ const OrbitalSystem = () => {
 
     // Cleanup
     return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('resize', checkMobile);
       if (animationId) cancelAnimationFrame(animationId);
