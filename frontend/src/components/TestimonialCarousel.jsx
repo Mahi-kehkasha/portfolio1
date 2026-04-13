@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 
 const TestimonialCarousel = ({ testimonials }) => {
@@ -7,6 +7,18 @@ const TestimonialCarousel = ({ testimonials }) => {
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const autoPlayRef = useRef(null);
+
+  const nextSlide = useCallback(() => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
+    );
+  }, [testimonials.length]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+    );
+  }, [testimonials.length]);
 
   // Auto-play functionality
   useEffect(() => {
@@ -21,19 +33,7 @@ const TestimonialCarousel = ({ testimonials }) => {
         clearInterval(autoPlayRef.current);
       }
     };
-  }, [currentIndex, isHovered]);
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
-    );
-  };
+  }, [currentIndex, isHovered, nextSlide]);
 
   const goToSlide = (index) => {
     setCurrentIndex(index);
