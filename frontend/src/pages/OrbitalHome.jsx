@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import OrbitalSystem from '../components/3d/OrbitalSystem';
 import Navigation from '../components/overlay/Navigation';
@@ -12,6 +12,55 @@ const OrbitalHome = () => {
   const subtitleRef = useRef(null);
   const locationRef = useRef(null);
   const ctaRef = useRef(null);
+
+  // Contact form state
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [formStatus, setFormStatus] = useState({ type: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setFormStatus({ type: '', message: '' });
+
+    try {
+      const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+      const response = await fetch(`${API_URL}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setFormStatus({ type: 'success', message: 'Message sent successfully! I\'ll get back to you soon.' });
+        setFormData({ name: '', email: '', message: '' }); // Reset form
+      } else {
+        setFormStatus({ type: 'error', message: data.message || 'Something went wrong. Please try again.' });
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
+      setFormStatus({ type: 'error', message: 'Failed to send message. Please try again later.' });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     // Elegant fade-in animation
@@ -354,28 +403,51 @@ const OrbitalHome = () => {
             </p>
             
             <div className="orbital-panel p-10">
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <input
                   type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
                   placeholder="Your Name"
+                  required
                   className="w-full orbital-panel px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-all bg-transparent"
                 />
                 <input
                   type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
                   placeholder="Your Email"
+                  required
                   className="w-full orbital-panel px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-all bg-transparent"
                 />
                 <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
                   placeholder="Your Message"
                   rows="5"
+                  required
                   className="w-full orbital-panel px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 resize-none transition-all bg-transparent"
                 />
+                
+                {/* Status Message */}
+                {formStatus.message && (
+                  <div className={`p-4 rounded-lg ${formStatus.type === 'success' ? 'bg-green-500/10 border border-green-500/20' : 'bg-red-500/10 border border-red-500/20'}`}>
+                    <p className={`text-sm ${formStatus.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                      {formStatus.message}
+                    </p>
+                  </div>
+                )}
+                
                 <button
                   type="submit"
-                  className="w-full px-10 py-4 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-lg font-semibold text-lg hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-3"
+                  disabled={isSubmitting}
+                  className="w-full px-10 py-4 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-lg font-semibold text-lg hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   style={{ fontFamily: 'Outfit, sans-serif' }}
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                   <Send size={20} />
                 </button>
               </form>
