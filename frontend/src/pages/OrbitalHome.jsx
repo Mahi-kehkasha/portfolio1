@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import OrbitalSystem from '../components/3d/OrbitalSystem';
 import Navigation from '../components/overlay/Navigation';
 import TestimonialCarousel from '../components/TestimonialCarousel';
-import { personalInfo, services, projects, skills, workExperience, testimonials, currentProject } from '../mock';
+import { personalInfo, services, projects, skills, workExperience, testimonials } from '../mock';
 import { ArrowRight, Send, Mail, Phone, Code, TrendingUp, Share2, Target, Palette, Server, Briefcase, MapPin, Calendar, X, ChevronUp, Quote } from 'lucide-react';
 
 const iconMap = { Code, TrendingUp, Share2, Target, Palette, Server };
@@ -292,58 +292,7 @@ const OrbitalHome = () => {
           </div>
         </section>
 
-        {/* SECTION 4: CURRENT PROJECT */}
-        <section id="current-project" className="min-h-screen flex items-center justify-center px-6 py-20">
-          <div className="text-center max-w-5xl w-full">
-            <h2 
-              className="text-5xl md:text-6xl font-bold mb-16 text-white"
-              style={{ fontFamily: 'Outfit, sans-serif', letterSpacing: '-0.02em' }}
-            >
-              {currentProject.title}
-            </h2>
-            
-            <div className="orbital-panel p-8 md:p-10 text-left">
-              {/* Header */}
-              <div className="mb-6">
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-2" style={{ fontFamily: 'Outfit, sans-serif' }}>
-                  {currentProject.company}
-                </h3>
-                <div className="flex items-center gap-2 mb-4">
-                  <Briefcase size={18} className="text-purple-400" />
-                  <a 
-                    href={`https://${currentProject.website}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xl font-semibold hover:text-purple-400 transition-colors"
-                    style={{ color: currentProject.color }}
-                  >
-                    {currentProject.website}
-                  </a>
-                </div>
-                <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                  {currentProject.description}
-                </p>
-              </div>
-
-              {/* Activities */}
-              <div className="space-y-3">
-                <h4 className="text-xl font-semibold text-white mb-4">Key Activities:</h4>
-                {currentProject.activities.map((activity, index) => (
-                  <div key={index} className="flex gap-3 group">
-                    <div className="mt-2 flex-shrink-0">
-                      <div className="w-1.5 h-1.5 rounded-full bg-purple-400 group-hover:scale-150 transition-transform"></div>
-                    </div>
-                    <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors">
-                      {activity}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION 5: SERVICES */}
+        {/* SECTION 4: SERVICES */}
         <section id="services" className="min-h-[150vh] flex items-center justify-center px-6 py-20">
           <div className="text-center max-w-7xl w-full">
             <h2 
@@ -377,7 +326,7 @@ const OrbitalHome = () => {
           </div>
         </section>
 
-        {/* SECTION 6: PROJECTS */}
+        {/* SECTION 5: PROJECTS */}
         <section id="projects" className="min-h-[150vh] flex items-center justify-center px-6 py-20">
           <div className="text-center max-w-7xl w-full">
             <h2 
@@ -499,7 +448,7 @@ const OrbitalHome = () => {
           </div>
         </section>
 
-        {/* SECTION 7: TESTIMONIALS */}
+        {/* SECTION 6: TESTIMONIALS */}
         <section id="testimonials" className="min-h-screen flex items-center justify-center px-6 py-20">
           <div className="text-center max-w-7xl w-full">
             <h2 
