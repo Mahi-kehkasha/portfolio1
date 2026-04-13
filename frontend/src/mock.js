@@ -74,7 +74,7 @@ export const projects = [
     strategy: "SEO-optimized website + local targeting",
     result: "Successfully established strong online presence with improved search rankings",
     color: "#6C4DF6",
-    image: "https://images.unsplash.com/photo-1634084462412-b54873c0a56d?crop=entropy&cs=srgb&fm=jpg&q=85"
+    image: "https://customer-assets.emergentagent.com/job_digital-maheen/artifacts/4ou14bgk_builderbro.png"
   },
   {
     id: 2,
@@ -85,7 +85,7 @@ export const projects = [
     strategy: "Image-rich portfolio site with fast loading",
     result: "Enhanced professional image with better client engagement",
     color: "#9D7BFF",
-    image: "https://images.unsplash.com/photo-1705931559004-2a5a1e10e21e?crop=entropy&cs=srgb&fm=jpg&q=85"
+    image: "https://customer-assets.emergentagent.com/job_digital-maheen/artifacts/oqtndpg5_Screenshot%202026-04-13%20141305.png"
   },
   {
     id: 3,
@@ -96,7 +96,7 @@ export const projects = [
     strategy: "E-commerce platform with elegant design and smooth checkout",
     result: "Launched successful online store with premium brand positioning",
     color: "#C6B6FF",
-    image: "https://images.unsplash.com/photo-1758398332771-0a79c5df74a3?crop=entropy&cs=srgb&fm=jpg&q=85"
+    image: "https://customer-assets.emergentagent.com/job_digital-maheen/artifacts/tsvor702_Screenshot%202026-04-13%20141418.png"
   },
   {
     id: 4,
@@ -118,7 +118,7 @@ export const projects = [
     strategy: "Complete redesign with project galleries and inquiry system",
     result: "Modernized digital presence with improved customer engagement",
     color: "#9D7BFF",
-    image: "https://images.unsplash.com/photo-1730966056852-db6ae2a9f571?crop=entropy&cs=srgb&fm=jpg&q=85"
+    image: "https://customer-assets.emergentagent.com/job_digital-maheen/artifacts/yaixisyn_Screenshot%202026-04-13%20141454.png"
   }
 ];
 

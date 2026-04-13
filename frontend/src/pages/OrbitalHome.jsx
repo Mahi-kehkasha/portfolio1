@@ -391,38 +391,54 @@ const OrbitalHome = () => {
               {projects.map((project) => (
                 <div
                   key={project.id}
-                  className="orbital-panel p-0 group relative overflow-hidden"
+                  className="orbital-panel p-0 group relative overflow-hidden hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500"
                 >
-                  {/* Project Image */}
-                  <div className="w-full h-48 overflow-hidden">
+                  {/* Project Image with Premium Hover Effects */}
+                  <div className="relative w-full h-56 overflow-hidden">
                     <img 
                       src={project.image} 
                       alt={project.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                      loading="lazy"
                     />
+                    {/* Purple gradient overlay on hover */}
+                    <div 
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{
+                        background: `linear-gradient(135deg, ${project.color}60, rgba(0,0,0,0.7))`
+                      }}
+                    />
+                    {/* Category badge */}
+                    <div 
+                      className="absolute top-4 right-4 px-4 py-2 rounded-full text-sm font-semibold backdrop-blur-md border"
+                      style={{
+                        background: `${project.color}40`,
+                        borderColor: `${project.color}80`,
+                        color: '#fff'
+                      }}
+                    >
+                      {project.category}
+                    </div>
                   </div>
 
                   {/* Project Content */}
                   <div className="p-8">
-                    <h3 className="text-3xl font-bold text-white mb-2" style={{ fontFamily: 'Outfit, sans-serif' }}>
+                    <h3 className="text-3xl font-bold text-white mb-4 group-hover:text-purple-400 transition-colors duration-300" style={{ fontFamily: 'Outfit, sans-serif' }}>
                       {project.name}
                     </h3>
-                    <div className="text-sm mb-6" style={{ color: project.color }}>
-                      {project.category}
-                    </div>
                     
                     <div className="space-y-4 text-left mb-6">
                       <div>
-                        <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Challenge</div>
+                        <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide font-semibold">Challenge</div>
                         <div className="text-sm text-gray-400 leading-relaxed">{project.problem}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Approach</div>
+                        <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide font-semibold">Approach</div>
                         <div className="text-sm text-gray-400 leading-relaxed">{project.strategy}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Outcome</div>
-                        <div className="text-sm font-medium" style={{ color: project.color }}>{project.result}</div>
+                        <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide font-semibold">Outcome</div>
+                        <div className="text-sm font-medium leading-relaxed" style={{ color: project.color }}>{project.result}</div>
                       </div>
                     </div>
 
@@ -431,11 +447,11 @@ const OrbitalHome = () => {
                       href={`https://${project.url}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-lg font-semibold hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-lg font-semibold hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 group/button"
                       style={{ fontFamily: 'Outfit, sans-serif' }}
                     >
                       Visit Website
-                      <ArrowRight size={18} />
+                      <ArrowRight size={18} className="group-hover/button:translate-x-1 transition-transform" />
                     </a>
                   </div>
                 </div>
@@ -512,6 +528,35 @@ const OrbitalHome = () => {
             <p className="text-gray-400 text-xl mb-12">
               Ready to build something great together?
             </p>
+            
+            {/* Contact Info Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+              <a 
+                href="tel:+917899275871"
+                className="orbital-panel p-6 flex items-center gap-4 hover:bg-purple-500/10 transition-all duration-300 group"
+              >
+                <Phone size={32} className="text-purple-400 group-hover:scale-110 transition-transform" />
+                <div className="text-left">
+                  <div className="text-sm text-gray-500 mb-1">Phone</div>
+                  <div className="text-lg font-semibold text-white group-hover:text-purple-400 transition-colors">
+                    +91 7899275871
+                  </div>
+                </div>
+              </a>
+              
+              <a 
+                href="mailto:connectmaheenk@gmail.com"
+                className="orbital-panel p-6 flex items-center gap-4 hover:bg-purple-500/10 transition-all duration-300 group"
+              >
+                <Mail size={32} className="text-purple-400 group-hover:scale-110 transition-transform" />
+                <div className="text-left">
+                  <div className="text-sm text-gray-500 mb-1">Email</div>
+                  <div className="text-lg font-semibold text-white group-hover:text-purple-400 transition-colors">
+                    connectmaheenk@gmail.com
+                  </div>
+                </div>
+              </a>
+            </div>
             
             <div className="orbital-panel p-10">
               <form className="space-y-6" onSubmit={handleSubmit}>
