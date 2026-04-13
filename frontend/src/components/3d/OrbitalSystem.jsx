@@ -21,8 +21,12 @@ const OrbitalSystem = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
-    if (!containerRef.current) {
+    // Capture the container ref value for cleanup
+    const container = containerRef.current;
+
+    if (!container) {
       console.warn('[Orbital System] Container ref not ready');
+      window.removeEventListener('resize', checkMobile);
       return;
     }
 
@@ -53,7 +57,7 @@ const OrbitalSystem = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
-    containerRef.current.appendChild(renderer.domElement);
+    container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
     // LIGHTING
@@ -419,9 +423,10 @@ const OrbitalSystem = () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('resize', checkMobile);
       
-      if (containerRef.current && renderer && renderer.domElement) {
+      // Use captured container value instead of ref.current
+      if (container && renderer && renderer.domElement) {
         try {
-          containerRef.current.removeChild(renderer.domElement);
+          container.removeChild(renderer.domElement);
         } catch (e) {
           console.warn('[Orbital System] Cleanup warning:', e);
         }
