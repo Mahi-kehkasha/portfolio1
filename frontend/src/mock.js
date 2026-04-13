@@ -168,23 +168,38 @@ export const testimonials = [
   {
     id: 1,
     text: "Maheen has done an excellent job managing our website and digital marketing. Her SEO strategies and ad campaigns have significantly improved our visibility and lead generation.",
-    author: "Client, BuilderBro",
+    author: "BuilderBro Team",
     role: "Construction Services",
+    company: "BuilderBro",
+    image: "https://customer-assets.emergentagent.com/job_digital-maheen/artifacts/4ou14bgk_builderbro.png",
     color: "#6C4DF6"
   },
   {
     id: 2,
     text: "Working with Maheen has been a great experience. She understands both design and marketing, which helped us improve our website performance and overall user experience.",
-    author: "Client, Innovative Facades",
+    author: "Innovative Facades",
     role: "Architecture Firm",
+    company: "Innovative Facades",
+    image: "https://customer-assets.emergentagent.com/job_digital-maheen/artifacts/oqtndpg5_Screenshot%202026-04-13%20141305.png",
     color: "#9D7BFF"
   },
   {
     id: 3,
     text: "Maheen is highly dedicated and detail-oriented. From content updates to running ad campaigns, she handles everything professionally and delivers consistent results.",
-    author: "Project Manager",
+    author: "The Leather Saga",
     role: "E-commerce Client",
+    company: "The Leather Saga",
+    image: "https://customer-assets.emergentagent.com/job_digital-maheen/artifacts/tsvor702_Screenshot%202026-04-13%20141418.png",
     color: "#C6B6FF"
+  },
+  {
+    id: 4,
+    text: "Her expertise in both technical development and digital marketing makes her invaluable. The website redesign and marketing campaigns exceeded our expectations.",
+    author: "Prajwal Constructions",
+    role: "Construction Company",
+    company: "Prajwal Constructions",
+    image: "https://customer-assets.emergentagent.com/job_digital-maheen/artifacts/yaixisyn_Screenshot%202026-04-13%20141454.png",
+    color: "#6C4DF6"
   }
 ];
 

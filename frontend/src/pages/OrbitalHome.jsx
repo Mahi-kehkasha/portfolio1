@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import OrbitalSystem from '../components/3d/OrbitalSystem';
 import Navigation from '../components/overlay/Navigation';
+import TestimonialCarousel from '../components/TestimonialCarousel';
 import { personalInfo, services, projects, skills, workExperience, testimonials, currentProject } from '../mock';
 import { ArrowRight, Send, Mail, Phone, Code, TrendingUp, Share2, Target, Palette, Server, Briefcase, MapPin, Calendar, X, ChevronUp, Quote } from 'lucide-react';
 
@@ -484,37 +485,18 @@ const OrbitalHome = () => {
 
         {/* SECTION 7: TESTIMONIALS */}
         <section id="testimonials" className="min-h-screen flex items-center justify-center px-6 py-20">
-          <div className="text-center max-w-6xl w-full">
+          <div className="text-center max-w-7xl w-full">
             <h2 
-              className="text-5xl md:text-6xl font-bold mb-16 text-white"
+              className="text-5xl md:text-6xl font-bold mb-4 text-white"
               style={{ fontFamily: 'Outfit, sans-serif', letterSpacing: '-0.02em' }}
             >
               Client Testimonials
             </h2>
+            <p className="text-gray-400 text-lg mb-16 max-w-2xl mx-auto">
+              Hear what my clients have to say about their experience working with me
+            </p>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {testimonials.map((testimonial) => (
-                <div
-                  key={testimonial.id}
-                  className="orbital-panel p-8 text-left relative"
-                >
-                  <Quote size={40} className="text-purple-400 opacity-20 mb-4" />
-                  
-                  <p className="text-gray-300 text-lg leading-relaxed mb-6 italic">
-                    "{testimonial.text}"
-                  </p>
-                  
-                  <div className="border-t border-purple-500/20 pt-4">
-                    <p className="text-white font-semibold mb-1" style={{ fontFamily: 'Outfit, sans-serif' }}>
-                      {testimonial.author}
-                    </p>
-                    <p className="text-sm" style={{ color: testimonial.color }}>
-                      {testimonial.role}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <TestimonialCarousel testimonials={testimonials} />
           </div>
         </section>
 
