@@ -1,6 +1,6 @@
 [build]
-  # Build command
-  command = "cd frontend && yarn build"
+  # Build command - install dependencies first, then build
+  command = "cd frontend && yarn install --frozen-lockfile && yarn build"
   
   # Publish directory
   publish = "frontend/build"
