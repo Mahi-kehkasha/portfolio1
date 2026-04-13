@@ -123,7 +123,7 @@ const OrbitalHome = () => {
       <OrbitalSystem />
       
       {/* Fixed Navigation */}
-      <Navigation />
+      <Navigation onGetInTouchClick={() => setIsModalOpen(true)} />
       
       {/* Scrollable Content Sections */}
       <div className="relative z-10">
