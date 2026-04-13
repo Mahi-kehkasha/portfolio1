@@ -245,9 +245,9 @@ const OrbitalSystem = () => {
 
     // Projects planets (Outer orbit - slow)
     const projectsPlanets = [];
-    const projectColors = [0x6C4DF6, 0x9D7BFF, 0xC6B6FF, 0x6C4DF6];
-    for (let i = 0; i < 4; i++) {
-      const startAngle = (i / 4) * Math.PI * 2;
+    const projectColors = [0x6C4DF6, 0x9D7BFF, 0xC6B6FF, 0x6C4DF6, 0x9D7BFF];
+    for (let i = 0; i < 5; i++) {
+      const startAngle = (i / 5) * Math.PI * 2;
       const planet = createPlanet(0.6, projectColors[i], 15, startAngle, 0.005, 'project');
       scene.add(planet);
       projectsPlanets.push(planet);

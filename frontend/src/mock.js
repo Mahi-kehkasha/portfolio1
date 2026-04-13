@@ -87,23 +87,33 @@ export const projects = [
   },
   {
     id: 3,
-    name: "Clover Kids",
-    url: "cloverkids.co.in",
-    category: "Education",
-    problem: "Manual inquiry handling",
-    strategy: "Online admission system + local SEO",
-    result: "Streamlined operations with automated inquiry management",
+    name: "The Leather Saga",
+    url: "theleathersaga.com",
+    category: "E-commerce",
+    problem: "Required premium online store for leather products",
+    strategy: "E-commerce platform with elegant design and smooth checkout",
+    result: "Launched successful online store with premium brand positioning",
     color: "#C6B6FF"
   },
   {
     id: 4,
-    name: "The Perfume Labs",
-    url: "theperfumelabs.in",
-    category: "E-commerce",
-    problem: "Needed online store for premium products",
-    strategy: "WooCommerce + payment integration + SEO",
-    result: "Launched successful e-commerce platform with seamless checkout",
+    name: "Kavvi",
+    url: "kavvi.in",
+    category: "Lifestyle",
+    problem: "Needed digital presence for lifestyle brand",
+    strategy: "Modern website with engaging visuals and brand storytelling",
+    result: "Created compelling digital experience that resonates with target audience",
     color: "#6C4DF6"
+  },
+  {
+    id: 5,
+    name: "Prajwal Constructions",
+    url: "prajwalconstructions.com",
+    category: "Construction",
+    problem: "Outdated website with poor user experience",
+    strategy: "Complete redesign with project galleries and inquiry system",
+    result: "Modernized digital presence with improved customer engagement",
+    color: "#9D7BFF"
   }
 ];
 

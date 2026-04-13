@@ -165,32 +165,6 @@ export const planetData = {
     {
       id: 'project-2',
       type: 'project',
-      name: 'The Perfume Labs',
-      description: 'E-commerce platform for premium perfumes with WooCommerce integration, payment gateway setup, and product catalog management.',
-      details: [
-        { label: 'Tech Stack', value: 'WordPress, WooCommerce, Stripe' },
-        { label: 'Key Features', value: 'Product filters, wishlist, reviews, secure checkout' },
-        { label: 'Timeline', value: 'Completed in 4 weeks' }
-      ],
-      link: 'https://theperfumelabs.in',
-      color: '#9D7BFF'
-    },
-    {
-      id: 'project-3',
-      type: 'project',
-      name: 'Clover Kids',
-      description: 'Educational institution website with online admission system, course information, and parent inquiry management.',
-      details: [
-        { label: 'Tech Stack', value: 'React, Node.js, MongoDB' },
-        { label: 'Key Features', value: 'Online admissions, course catalog, inquiry system' },
-        { label: 'Timeline', value: 'Completed in 5 weeks' }
-      ],
-      link: 'https://cloverkids.co.in',
-      color: '#C6B6FF'
-    },
-    {
-      id: 'project-4',
-      type: 'project',
       name: 'Innovative Facades',
       description: 'Portfolio website for an architecture firm showcasing projects with high-quality image galleries and fast loading optimization.',
       details: [
@@ -199,7 +173,46 @@ export const planetData = {
         { label: 'Timeline', value: 'Completed in 3 weeks' }
       ],
       link: 'https://innovativefacades.com',
+      color: '#9D7BFF'
+    },
+    {
+      id: 'project-3',
+      type: 'project',
+      name: 'The Leather Saga',
+      description: 'Premium e-commerce platform for luxury leather products with elegant design, smooth checkout experience, and product showcase.',
+      details: [
+        { label: 'Tech Stack', value: 'WordPress, WooCommerce, Stripe' },
+        { label: 'Key Features', value: 'Product catalog, secure payments, wishlist, reviews' },
+        { label: 'Timeline', value: 'Completed in 4 weeks' }
+      ],
+      link: 'https://theleathersaga.com',
+      color: '#C6B6FF'
+    },
+    {
+      id: 'project-4',
+      type: 'project',
+      name: 'Kavvi',
+      description: 'Modern lifestyle brand website with engaging visuals, brand storytelling, and seamless user experience to connect with target audience.',
+      details: [
+        { label: 'Tech Stack', value: 'React, Node.js, MongoDB' },
+        { label: 'Key Features', value: 'Brand storytelling, product showcase, contact system' },
+        { label: 'Timeline', value: 'Completed in 3 weeks' }
+      ],
+      link: 'https://kavvi.in',
       color: '#6C4DF6'
+    },
+    {
+      id: 'project-5',
+      type: 'project',
+      name: 'Prajwal Constructions',
+      description: 'Complete website redesign for construction company featuring project portfolios, service information, and customer inquiry management.',
+      details: [
+        { label: 'Tech Stack', value: 'WordPress, Custom Theme' },
+        { label: 'Key Features', value: 'Project galleries, inquiry forms, service pages' },
+        { label: 'Timeline', value: 'Completed in 4 weeks' }
+      ],
+      link: 'https://prajwalconstructions.com',
+      color: '#9D7BFF'
     }
   ]
 };
