@@ -131,8 +131,30 @@ export const skills = [
 export const navItems = [
   { id: "hero", label: "Home", position: 0 },
   { id: "about", label: "About", position: 1 },
-  { id: "services", label: "Services", position: 2 },
-  { id: "projects", label: "Projects", position: 3 },
-  { id: "skills", label: "Skills", position: 4 },
-  { id: "contact", label: "Contact", position: 5 }
+  { id: "experience", label: "Experience", position: 2 },
+  { id: "services", label: "Services", position: 3 },
+  { id: "projects", label: "Projects", position: 4 },
+  { id: "skills", label: "Skills", position: 5 },
+  { id: "contact", label: "Contact", position: 6 }
+];
+
+export const workExperience = [
+  {
+    id: 1,
+    company: "Aril BuilderBro LLP",
+    position: "Digital Marketing Executive",
+    duration: "January 2025 – Present",
+    location: "Bengaluru",
+    website: "builderbro.construction",
+    responsibilities: [
+      "Managed the company website builderbro.construction using WordPress including content updates, landing pages, and SEO improvements.",
+      "Implemented on-page SEO strategies such as keyword optimization, meta tags, image alt tags, and internal linking to improve search engine rankings.",
+      "Planned and executed Facebook and Instagram ad campaigns to generate leads for construction and real estate services.",
+      "Optimized website performance including page speed, mobile responsiveness, and UI improvements to enhance user experience.",
+      "Created and published marketing content, social media creatives, and promotional campaigns to improve brand visibility.",
+      "Monitored campaign performance using Google Analytics and Meta Ads Manager to improve conversion rates and ROI.",
+      "Collaborated with development and design teams to implement digital marketing strategies aligned with business goals."
+    ],
+    color: "#6C4DF6"
+  }
 ];

@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import OrbitalSystem from '../components/3d/OrbitalSystem';
 import Navigation from '../components/overlay/Navigation';
-import { personalInfo, services, projects, skills } from '../mock';
-import { ArrowRight, Send, Mail, Phone, Code, TrendingUp, Share2, Target, Palette, Server } from 'lucide-react';
+import { personalInfo, services, projects, skills, workExperience } from '../mock';
+import { ArrowRight, Send, Mail, Phone, Code, TrendingUp, Share2, Target, Palette, Server, Briefcase, MapPin, Calendar } from 'lucide-react';
 
 const iconMap = { Code, TrendingUp, Share2, Target, Palette, Server };
 
@@ -137,7 +137,82 @@ const OrbitalHome = () => {
           </div>
         </section>
 
-        {/* SECTION 3: SERVICES */}
+        {/* SECTION 3: WORK EXPERIENCE */}
+        <section id="experience" className="min-h-screen flex items-center justify-center px-6 py-20">
+          <div className="text-center max-w-5xl w-full">
+            <h2 
+              className="text-5xl md:text-6xl font-bold mb-16 text-white"
+              style={{ fontFamily: 'Outfit, sans-serif', letterSpacing: '-0.02em' }}
+            >
+              Work Experience
+            </h2>
+            
+            <div className="space-y-8">
+              {workExperience.map((job) => (
+                <div
+                  key={job.id}
+                  className="orbital-panel p-8 md:p-10 text-left"
+                >
+                  {/* Header */}
+                  <div className="mb-6">
+                    <div className="flex items-start justify-between flex-wrap gap-4 mb-4">
+                      <div>
+                        <h3 className="text-3xl md:text-4xl font-bold text-white mb-2" style={{ fontFamily: 'Outfit, sans-serif' }}>
+                          {job.company}
+                        </h3>
+                        <div className="text-xl md:text-2xl font-semibold mb-3" style={{ color: job.color }}>
+                          {job.position}
+                        </div>
+                      </div>
+                      <div className="inline-block px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20">
+                        <span className="text-sm font-semibold text-purple-400">Current Role</span>
+                      </div>
+                    </div>
+                    
+                    {/* Meta Info */}
+                    <div className="flex flex-wrap gap-6 text-gray-400 text-sm">
+                      <div className="flex items-center gap-2">
+                        <Calendar size={16} className="text-purple-400" />
+                        <span>{job.duration}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <MapPin size={16} className="text-purple-400" />
+                        <span>{job.location}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Briefcase size={16} className="text-purple-400" />
+                        <a 
+                          href={`https://${job.website}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-purple-400 transition-colors"
+                        >
+                          {job.website}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Responsibilities */}
+                  <div className="space-y-3">
+                    {job.responsibilities.map((responsibility, index) => (
+                      <div key={index} className="flex gap-3 group">
+                        <div className="mt-2 flex-shrink-0">
+                          <div className="w-1.5 h-1.5 rounded-full bg-purple-400 group-hover:scale-150 transition-transform"></div>
+                        </div>
+                        <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors">
+                          {responsibility}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 4: SERVICES */}
         <section id="services" className="min-h-[150vh] flex items-center justify-center px-6 py-20">
           <div className="text-center max-w-7xl w-full">
             <h2 
@@ -171,7 +246,7 @@ const OrbitalHome = () => {
           </div>
         </section>
 
-        {/* SECTION 4: PROJECTS */}
+        {/* SECTION 5: PROJECTS */}
         <section id="projects" className="min-h-[150vh] flex items-center justify-center px-6 py-20">
           <div className="text-center max-w-7xl w-full">
             <h2 
@@ -226,7 +301,7 @@ const OrbitalHome = () => {
           </div>
         </section>
 
-        {/* SECTION 5: SKILLS */}
+        {/* SECTION 6: SKILLS */}
         <section id="skills" className="min-h-[150vh] flex items-center justify-center px-6 py-20">
           <div className="text-center max-w-6xl w-full">
             <h2 
@@ -265,7 +340,7 @@ const OrbitalHome = () => {
           </div>
         </section>
 
-        {/* SECTION 6: CONTACT */}
+        {/* SECTION 7: CONTACT */}
         <section id="contact" className="min-h-screen flex items-center justify-center px-6 py-20">
           <div className="text-center max-w-3xl w-full">
             <h2 
