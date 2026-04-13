@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import OrbitalSystem from '../components/3d/OrbitalSystem';
 import Navigation from '../components/overlay/Navigation';
-import { personalInfo, services, projects, skills, workExperience } from '../mock';
-import { ArrowRight, Send, Mail, Phone, Code, TrendingUp, Share2, Target, Palette, Server, Briefcase, MapPin, Calendar } from 'lucide-react';
+import { personalInfo, services, projects, skills, workExperience, testimonials, currentProject } from '../mock';
+import { ArrowRight, Send, Mail, Phone, Code, TrendingUp, Share2, Target, Palette, Server, Briefcase, MapPin, Calendar, X, ChevronUp, Quote } from 'lucide-react';
 
 const iconMap = { Code, TrendingUp, Share2, Target, Palette, Server };
 
@@ -21,6 +21,12 @@ const OrbitalHome = () => {
   });
   const [formStatus, setFormStatus] = useState({ type: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Modal state for "Get in Touch"
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Show "Go to Top" button state
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -51,6 +57,10 @@ const OrbitalHome = () => {
       if (response.ok) {
         setFormStatus({ type: 'success', message: 'Message sent successfully! I\'ll get back to you soon.' });
         setFormData({ name: '', email: '', message: '' }); // Reset form
+        // Close modal if open
+        if (isModalOpen) {
+          setTimeout(() => setIsModalOpen(false), 2000);
+        }
       } else {
         setFormStatus({ type: 'error', message: data.message || 'Something went wrong. Please try again.' });
       }
@@ -61,6 +71,25 @@ const OrbitalHome = () => {
       setIsSubmitting(false);
     }
   };
+
+  // Scroll to top handler
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Scroll listener for "Go to Top" button
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 500) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     // Elegant fade-in animation
@@ -122,7 +151,7 @@ const OrbitalHome = () => {
               className="text-2xl md:text-3xl lg:text-4xl font-medium text-gray-300 mb-6 opacity-0"
               style={{ fontFamily: 'Outfit, sans-serif', letterSpacing: '-0.01em' }}
             >
-              Digital Marketing & MERN Stack Developer
+              {personalInfo.title}
             </p>
 
             <p 
@@ -143,11 +172,12 @@ const OrbitalHome = () => {
               </button>
 
               <button
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-10 py-4 border border-purple-500 text-purple-300 hover:bg-purple-500/10 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105"
+                onClick={() => setIsModalOpen(true)}
+                className="px-10 py-4 border-2 border-purple-500 text-purple-400 rounded-lg font-semibold text-lg hover:bg-purple-500/10 transition-all duration-300 hover:scale-105 flex items-center gap-3"
                 style={{ fontFamily: 'Outfit, sans-serif' }}
               >
-                Connect
+                Get in Touch
+                <Send size={20} />
               </button>
             </div>
           </div>

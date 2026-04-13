@@ -2,12 +2,12 @@
 
 export const personalInfo = {
   name: "Maheen Kehkasha",
-  title: "Digital Marketing & MERN Stack Developer",
+  title: "Digital Marketer & Web Developer",
   location: "Bengaluru, India",
   tagline: "I Build & Grow Digital Systems That Drive Results",
   description: "I don't just build websites — I make them grow. Combining digital marketing strategy with full-stack development to create systems that convert.",
-  primarySkill: "Digital Marketing",
-  secondarySkill: "MERN Stack Development",
+  primarySkill: "Digital Marketer",
+  secondarySkill: "Web Developer",
   phone: "+91 7899275871",
   email: "connectmaheenk@gmail.com",
   experience: "1+ Years"
@@ -158,3 +158,44 @@ export const workExperience = [
     color: "#6C4DF6"
   }
 ];
+
+export const testimonials = [
+  {
+    id: 1,
+    text: "Maheen has done an excellent job managing our website and digital marketing. Her SEO strategies and ad campaigns have significantly improved our visibility and lead generation.",
+    author: "Client, BuilderBro",
+    role: "Construction Services",
+    color: "#6C4DF6"
+  },
+  {
+    id: 2,
+    text: "Working with Maheen has been a great experience. She understands both design and marketing, which helped us improve our website performance and overall user experience.",
+    author: "Client, Innovative Facades",
+    role: "Architecture Firm",
+    color: "#9D7BFF"
+  },
+  {
+    id: 3,
+    text: "Maheen is highly dedicated and detail-oriented. From content updates to running ad campaigns, she handles everything professionally and delivers consistent results.",
+    author: "Project Manager",
+    role: "E-commerce Client",
+    color: "#C6B6FF"
+  }
+];
+
+export const currentProject = {
+  title: "Current Project – Digital Marketing & Web Management",
+  company: "BuilderBro Construction",
+  website: "builderbro.construction",
+  description: "I am currently working on the website builderbro.construction, where I handle both website management and digital marketing activities.",
+  activities: [
+    "Managing and updating the WordPress website, including content updates and creating high-converting landing pages",
+    "Implementing on-page SEO strategies such as keyword optimization, meta tags, image alt attributes, and internal linking to improve search visibility",
+    "Planning and executing Facebook and Instagram ad campaigns to generate quality leads for construction and real estate services",
+    "Optimizing website performance, including page speed, mobile responsiveness, and UI enhancements for a better user experience",
+    "Creating and publishing marketing content, social media creatives, and promotional campaigns to strengthen brand presence",
+    "Monitoring and analyzing campaign performance using Google Analytics and Meta Ads Manager to improve conversions and ROI",
+    "Collaborating with developers and designers to align digital strategies with business goals"
+  ],
+  color: "#6C4DF6"
+};
