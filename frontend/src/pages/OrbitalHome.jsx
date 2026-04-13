@@ -291,7 +291,58 @@ const OrbitalHome = () => {
           </div>
         </section>
 
-        {/* SECTION 4: SERVICES */}
+        {/* SECTION 4: CURRENT PROJECT */}
+        <section id="current-project" className="min-h-screen flex items-center justify-center px-6 py-20">
+          <div className="text-center max-w-5xl w-full">
+            <h2 
+              className="text-5xl md:text-6xl font-bold mb-16 text-white"
+              style={{ fontFamily: 'Outfit, sans-serif', letterSpacing: '-0.02em' }}
+            >
+              {currentProject.title}
+            </h2>
+            
+            <div className="orbital-panel p-8 md:p-10 text-left">
+              {/* Header */}
+              <div className="mb-6">
+                <h3 className="text-3xl md:text-4xl font-bold text-white mb-2" style={{ fontFamily: 'Outfit, sans-serif' }}>
+                  {currentProject.company}
+                </h3>
+                <div className="flex items-center gap-2 mb-4">
+                  <Briefcase size={18} className="text-purple-400" />
+                  <a 
+                    href={`https://${currentProject.website}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xl font-semibold hover:text-purple-400 transition-colors"
+                    style={{ color: currentProject.color }}
+                  >
+                    {currentProject.website}
+                  </a>
+                </div>
+                <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                  {currentProject.description}
+                </p>
+              </div>
+
+              {/* Activities */}
+              <div className="space-y-3">
+                <h4 className="text-xl font-semibold text-white mb-4">Key Activities:</h4>
+                {currentProject.activities.map((activity, index) => (
+                  <div key={index} className="flex gap-3 group">
+                    <div className="mt-2 flex-shrink-0">
+                      <div className="w-1.5 h-1.5 rounded-full bg-purple-400 group-hover:scale-150 transition-transform"></div>
+                    </div>
+                    <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors">
+                      {activity}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 5: SERVICES */}
         <section id="services" className="min-h-[150vh] flex items-center justify-center px-6 py-20">
           <div className="text-center max-w-7xl w-full">
             <h2 
@@ -325,7 +376,7 @@ const OrbitalHome = () => {
           </div>
         </section>
 
-        {/* SECTION 5: PROJECTS */}
+        {/* SECTION 6: PROJECTS */}
         <section id="projects" className="min-h-[150vh] flex items-center justify-center px-6 py-20">
           <div className="text-center max-w-7xl w-full">
             <h2 
@@ -339,41 +390,53 @@ const OrbitalHome = () => {
               {projects.map((project) => (
                 <div
                   key={project.id}
-                  className="orbital-panel p-8 group relative"
+                  className="orbital-panel p-0 group relative overflow-hidden"
                 >
-                  <h3 className="text-3xl font-bold text-white mb-2" style={{ fontFamily: 'Outfit, sans-serif' }}>
-                    {project.name}
-                  </h3>
-                  <div className="text-sm mb-6" style={{ color: project.color }}>
-                    {project.category}
-                  </div>
-                  
-                  <div className="space-y-4 text-left mb-6">
-                    <div>
-                      <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Challenge</div>
-                      <div className="text-sm text-gray-400 leading-relaxed">{project.problem}</div>
-                    </div>
-                    <div>
-                      <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Approach</div>
-                      <div className="text-sm text-gray-400 leading-relaxed">{project.strategy}</div>
-                    </div>
-                    <div>
-                      <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Outcome</div>
-                      <div className="text-sm font-medium" style={{ color: project.color }}>{project.result}</div>
-                    </div>
+                  {/* Project Image */}
+                  <div className="w-full h-48 overflow-hidden">
+                    <img 
+                      src={project.image} 
+                      alt={project.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
                   </div>
 
-                  {/* Visit Website Button */}
-                  <a
-                    href={`https://${project.url}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-lg font-semibold hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105"
-                    style={{ fontFamily: 'Outfit, sans-serif' }}
-                  >
-                    Visit Website
-                    <ArrowRight size={18} />
-                  </a>
+                  {/* Project Content */}
+                  <div className="p-8">
+                    <h3 className="text-3xl font-bold text-white mb-2" style={{ fontFamily: 'Outfit, sans-serif' }}>
+                      {project.name}
+                    </h3>
+                    <div className="text-sm mb-6" style={{ color: project.color }}>
+                      {project.category}
+                    </div>
+                    
+                    <div className="space-y-4 text-left mb-6">
+                      <div>
+                        <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Challenge</div>
+                        <div className="text-sm text-gray-400 leading-relaxed">{project.problem}</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Approach</div>
+                        <div className="text-sm text-gray-400 leading-relaxed">{project.strategy}</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Outcome</div>
+                        <div className="text-sm font-medium" style={{ color: project.color }}>{project.result}</div>
+                      </div>
+                    </div>
+
+                    {/* Visit Website Button */}
+                    <a
+                      href={`https://${project.url}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-lg font-semibold hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105"
+                      style={{ fontFamily: 'Outfit, sans-serif' }}
+                    >
+                      Visit Website
+                      <ArrowRight size={18} />
+                    </a>
+                  </div>
                 </div>
               ))}
             </div>
@@ -419,7 +482,43 @@ const OrbitalHome = () => {
           </div>
         </section>
 
-        {/* SECTION 7: CONTACT */}
+        {/* SECTION 7: TESTIMONIALS */}
+        <section id="testimonials" className="min-h-screen flex items-center justify-center px-6 py-20">
+          <div className="text-center max-w-6xl w-full">
+            <h2 
+              className="text-5xl md:text-6xl font-bold mb-16 text-white"
+              style={{ fontFamily: 'Outfit, sans-serif', letterSpacing: '-0.02em' }}
+            >
+              Client Testimonials
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {testimonials.map((testimonial) => (
+                <div
+                  key={testimonial.id}
+                  className="orbital-panel p-8 text-left relative"
+                >
+                  <Quote size={40} className="text-purple-400 opacity-20 mb-4" />
+                  
+                  <p className="text-gray-300 text-lg leading-relaxed mb-6 italic">
+                    "{testimonial.text}"
+                  </p>
+                  
+                  <div className="border-t border-purple-500/20 pt-4">
+                    <p className="text-white font-semibold mb-1" style={{ fontFamily: 'Outfit, sans-serif' }}>
+                      {testimonial.author}
+                    </p>
+                    <p className="text-sm" style={{ color: testimonial.color }}>
+                      {testimonial.role}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 8: CONTACT */}
         <section id="contact" className="min-h-screen flex items-center justify-center px-6 py-20">
           <div className="text-center max-w-3xl w-full">
             <h2 
@@ -501,6 +600,91 @@ const OrbitalHome = () => {
           <p className="text-gray-500">© 2025 Maheen Kehkasha. All rights reserved.</p>
         </div>
       </div>
+
+      {/* Contact Modal */}
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div 
+            className="orbital-panel p-8 max-w-2xl w-full relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+            >
+              <X size={24} />
+            </button>
+
+            <h2 className="text-3xl font-bold text-white mb-6" style={{ fontFamily: 'Outfit, sans-serif' }}>
+              Get in Touch
+            </h2>
+
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                placeholder="Your Name"
+                required
+                className="w-full orbital-panel px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-all bg-transparent"
+              />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="Your Email"
+                required
+                className="w-full orbital-panel px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-all bg-transparent"
+              />
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
+                placeholder="Your Message"
+                rows="5"
+                required
+                className="w-full orbital-panel px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 resize-none transition-all bg-transparent"
+              />
+              
+              {/* Status Message */}
+              {formStatus.message && (
+                <div className={`p-4 rounded-lg ${formStatus.type === 'success' ? 'bg-green-500/10 border border-green-500/20' : 'bg-red-500/10 border border-red-500/20'}`}>
+                  <p className={`text-sm ${formStatus.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                    {formStatus.message}
+                  </p>
+                </div>
+              )}
+              
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full px-10 py-4 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-lg font-semibold text-lg hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                style={{ fontFamily: 'Outfit, sans-serif' }}
+              >
+                {isSubmitting ? 'Sending...' : 'Send Message'}
+                <Send size={20} />
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Go to Top Button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-50 p-4 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-full shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-110"
+          aria-label="Scroll to top"
+        >
+          <ChevronUp size={24} />
+        </button>
+      )}
 
       {/* Scroll Indicator */}
       <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none">

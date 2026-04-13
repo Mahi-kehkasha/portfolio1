@@ -73,7 +73,8 @@ export const projects = [
     problem: "Low online visibility, no digital presence",
     strategy: "SEO-optimized website + local targeting",
     result: "Successfully established strong online presence with improved search rankings",
-    color: "#6C4DF6"
+    color: "#6C4DF6",
+    image: "https://images.unsplash.com/photo-1634084462412-b54873c0a56d?crop=entropy&cs=srgb&fm=jpg&q=85"
   },
   {
     id: 2,
@@ -83,7 +84,8 @@ export const projects = [
     problem: "Needed modern portfolio showcase",
     strategy: "Image-rich portfolio site with fast loading",
     result: "Enhanced professional image with better client engagement",
-    color: "#9D7BFF"
+    color: "#9D7BFF",
+    image: "https://images.unsplash.com/photo-1705931559004-2a5a1e10e21e?crop=entropy&cs=srgb&fm=jpg&q=85"
   },
   {
     id: 3,
@@ -93,7 +95,8 @@ export const projects = [
     problem: "Required premium online store for leather products",
     strategy: "E-commerce platform with elegant design and smooth checkout",
     result: "Launched successful online store with premium brand positioning",
-    color: "#C6B6FF"
+    color: "#C6B6FF",
+    image: "https://images.unsplash.com/photo-1758398332771-0a79c5df74a3?crop=entropy&cs=srgb&fm=jpg&q=85"
   },
   {
     id: 4,
@@ -103,7 +106,8 @@ export const projects = [
     problem: "Needed digital presence for lifestyle brand",
     strategy: "Modern website with engaging visuals and brand storytelling",
     result: "Created compelling digital experience that resonates with target audience",
-    color: "#6C4DF6"
+    color: "#6C4DF6",
+    image: "https://images.unsplash.com/photo-1590479773265-7464e5d48118?crop=entropy&cs=srgb&fm=jpg&q=85"
   },
   {
     id: 5,
@@ -113,7 +117,8 @@ export const projects = [
     problem: "Outdated website with poor user experience",
     strategy: "Complete redesign with project galleries and inquiry system",
     result: "Modernized digital presence with improved customer engagement",
-    color: "#9D7BFF"
+    color: "#9D7BFF",
+    image: "https://images.unsplash.com/photo-1730966056852-db6ae2a9f571?crop=entropy&cs=srgb&fm=jpg&q=85"
   }
 ];
 
